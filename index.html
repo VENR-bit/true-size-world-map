@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The World at True Size</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+
+<div class="sheet">
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">Sheet 1 &middot; The World &middot; Equal-area series</p>
+      <h1>The World at True Size</h1>
+      <p class="deck">Every landmass drawn at its correct share of the Earth&rsquo;s surface. Switch projections to see which ones keep that promise &mdash; and which quietly inflate the north.</p>
+    </div>
+    <dl class="mast-meta">
+      <div><dt>Projection</dt><dd id="m-proj">Equal Earth</dd></div>
+      <div><dt>Property</dt><dd id="m-prop">Equal-area</dd></div>
+      <div><dt>Graticule</dt><dd>15&deg; &middot; Greenwich</dd></div>
+      <div><dt>Datum</dt><dd>Sphere, R 6 371 km</dd></div>
+    </dl>
+  </header>
+
+  <div class="body">
+    <figure class="plate">
+      <div class="plate-frame"><div class="plate-inner" id="plate"><svg id="map" tabindex="0" role="img" aria-label="World map drawn on an equal-area projection. Drag to pan, scroll or pinch to zoom, arrow keys to pan, plus and minus to zoom."></svg>
+        <div class="zoombar">
+          <button type="button" id="z-in" aria-label="Zoom in">+</button>
+          <button type="button" id="z-out" aria-label="Zoom out">&minus;</button>
+          <button type="button" id="z-reset" aria-label="Reset the view">Fit</button>
+          <span class="zval" id="z-read" aria-live="polite">&times;1.0</span>
+        </div></div></div>
+      <figcaption>
+        <span><b>Coastlines</b> Natural Earth, 1:50 m</span>
+        <span><b>Areas</b> measured on the sphere</span>
+        <span id="cap-note"><b>Drag</b> to pan &middot; <b>scroll or pinch</b> to zoom &middot; <b>click</b> a country to read its size</span>
+      </figcaption>
+    </figure>
+
+    <aside class="rail">
+      <section class="card">
+        <h2>Projection</h2>
+        <div id="register"></div>
+      </section>
+
+      <section class="card">
+        <h2>Layers</h2>
+        <label class="toggle"><input type="checkbox" id="t-grat" checked><span class="box"></span>Graticule &amp; parallels</label>
+        <label class="toggle"><input type="checkbox" id="t-tissot"><span class="box"></span>Distortion circles</label>
+        <p class="hint" id="tissot-hint">Equal circles on the globe, 6&deg; across. Their shape may change; on an equal-area map their <em>area</em> never does.</p>
+      </section>
+
+      <section class="card">
+        <h2>Selected</h2>
+        <p class="ro-name" id="ro-name">Greenland</p>
+        <p class="ro-sub" id="ro-sub">&asymp; 2.15 million km&sup2; &middot; 1.4% of land</p>
+        <div class="ro-figure">
+          <span class="ro-val ok" id="ro-val">1.00&times;</span>
+          <span class="ro-cap" id="ro-cap">its<br>true size</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Size check</h2>
+        <div class="rows" id="rows"></div>
+        <div class="scale-key"><span>0.25&times;</span><span>true size</span><span>32&times;</span></div>
+        <p class="hint" id="check-hint">On an equal-area projection every figure reads 1.00&times;. Choose Mercator to watch them break.</p>
+      </section>
+    </aside>
+  </div>
+
+  <footer>
+    <div>
+      <h3>Why &ldquo;no distortion&rdquo; is a choice</h3>
+      <p>A sphere cannot be flattened without stretching something. Carl Friedrich Gauss proved it, and Tissot showed the consequence: a flat map can hold <em>area</em> true or <em>shape</em> true, never both at once. These equal-area projections keep every country&rsquo;s share of the surface exact and spend the error on shape, mostly near the poles and the outer edges.</p>
+    </div>
+    <div>
+      <h3>Zooming, honestly</h3>
+      <p>Pan and zoom scale the whole plate uniformly, so nothing shifts relative to anything else: every figure in the size check holds at any magnification. Coastlines are drawn from 1:50 m data, detailed enough to hold up several steps in &mdash; far enough that you can put Greenland and the Congo side by side and see the answer yourself.</p>
+    </div>
+    <div>
+      <h3>What Mercator is for</h3>
+      <p>Mercator is not a bad map, it is a navigator&rsquo;s map: a straight line on it is a constant compass bearing, which is why it rules at sea and on screens that pan and zoom. The price is area. At 70&deg;N it magnifies by roughly nine, which is how Greenland ends up the size of Africa &mdash; Africa is about fourteen times larger.</p>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo-projection@4.0.0/dist/d3-geo-projection.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="data/countries-50m.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
